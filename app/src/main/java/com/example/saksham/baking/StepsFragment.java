@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 public class StepsFragment extends Fragment  {
-    int Position;
+    int Position=0;
     private BakingStepsAdapter mAdapter;
     private RecyclerView recyclerView;
 
