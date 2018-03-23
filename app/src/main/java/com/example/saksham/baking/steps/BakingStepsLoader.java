@@ -3,9 +3,6 @@ package com.example.saksham.baking.steps;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-import com.example.saksham.baking.ingredients.Ingredients;
-import com.example.saksham.baking.ingredients.NetworkUtilsIncredients;
-
 import java.util.List;
 
 /**

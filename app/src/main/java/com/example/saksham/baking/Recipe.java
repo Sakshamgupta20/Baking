@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.saksham.baking.ingredients.Ingeridients_main;
+import com.example.saksham.baking.ingredients.Ingredients_main;
 import com.example.saksham.baking.ingredients.IngredientsAll;
 import com.example.saksham.baking.steps.BakingStepsAdapter;
 import com.example.saksham.baking.steps.Steps;
@@ -15,7 +15,7 @@ import com.example.saksham.baking.steps.StepsMain;
 
 import java.util.List;
 
-public class recipie extends AppCompatActivity implements BakingStepsAdapter.StepsAdapterOnClickHandler{
+public class Recipe extends AppCompatActivity implements BakingStepsAdapter.StepsAdapterOnClickHandler{
    static FragmentManager fragmentManager;
 
 
@@ -64,7 +64,7 @@ public static int pos=0;
         steps1 = steps;
         if(findViewById(R.id.android_me_linear_layouttablet) != null) {
             flag=1;
-            RecipieStepsDetails SFragment = new RecipieStepsDetails();
+            RecipeStepsDetails SFragment = new RecipeStepsDetails();
             fragmentManager.beginTransaction()
                     .replace(R.id.ingredient_all, SFragment)
                     .commit();
@@ -89,7 +89,7 @@ public void imageclick1(View view)
     }
     else
     {
-        Intent intent = new Intent(this, Ingeridients_main.class);
+        Intent intent = new Intent(this, Ingredients_main.class);
         startActivity(intent);
     }
 }

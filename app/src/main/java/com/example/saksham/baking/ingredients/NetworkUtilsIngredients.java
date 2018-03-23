@@ -22,8 +22,8 @@ import java.util.List;
  * Created by Saksham on 17-03-2018.
  */
 
-public class NetworkUtilsIncredients {
-    private static final String LOG_TAG = NetworkUtilsIncredients.class.getSimpleName();
+public class NetworkUtilsIngredients {
+    private static final String LOG_TAG = NetworkUtilsIngredients.class.getSimpleName();
 
     private static URL createUrl(String stringUrl) {
         URL url = null;

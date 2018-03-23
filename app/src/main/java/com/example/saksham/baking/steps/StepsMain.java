@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.saksham.baking.R;
-import com.example.saksham.baking.RecipieStepsDetails;
+import com.example.saksham.baking.RecipeStepsDetails;
 
 public class StepsMain extends AppCompatActivity {
 
@@ -17,7 +17,7 @@ public class StepsMain extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        RecipieStepsDetails StFragment = new RecipieStepsDetails();
+        RecipeStepsDetails StFragment = new RecipeStepsDetails();
             fragmentManager.beginTransaction()
                     .replace(R.id.ingredient_all, StFragment)
                    .commit();

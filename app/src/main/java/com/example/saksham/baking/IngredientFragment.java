@@ -1,28 +1,14 @@
 package com.example.saksham.baking;
 
-import android.content.Intent;
-
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.example.saksham.baking.ingredients.BakingIngredientsLoader;
-import com.example.saksham.baking.ingredients.Ingeridients_main;
-
-import com.example.saksham.baking.ingredients.Ingredients;
 import com.example.saksham.baking.steps.BakingStepsAdapter;
-import com.example.saksham.baking.steps.BakingStepsLoader;
-import com.example.saksham.baking.steps.Steps;
-
-import java.util.List;
 
 
 /**

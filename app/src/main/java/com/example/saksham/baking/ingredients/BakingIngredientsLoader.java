@@ -30,7 +30,7 @@ public class BakingIngredientsLoader extends AsyncTaskLoader<List<Ingredients>>
         {
             return null;
         }
-        List<Ingredients> result = NetworkUtilsIncredients.fetchBakingInData(murl,pos);
+        List<Ingredients> result = NetworkUtilsIngredients.fetchBakingInData(murl,pos);
         return result;
     }
 

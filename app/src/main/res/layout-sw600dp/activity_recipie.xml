@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:baselineAligned="false"
     android:orientation="horizontal"
-    tools:context=".recipie">
+    tools:context=".Recipe">
 
 
 <LinearLayout

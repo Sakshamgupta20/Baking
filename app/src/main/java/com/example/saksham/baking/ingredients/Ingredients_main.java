@@ -1,16 +1,13 @@
 
 package com.example.saksham.baking.ingredients;
 
-import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.saksham.baking.IngredientFragment;
 import com.example.saksham.baking.R;
-import com.example.saksham.baking.RecipieStepsDetails;
 
-public class Ingeridients_main extends AppCompatActivity {
+public class Ingredients_main extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -25,12 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".recipie" />
+        <activity android:name=".Recipe" />
         <activity android:name=".ingredients.IngredientsAll" />
         <activity
-            android:name=".ingredients.Ingeridients_main"
+            android:name=".ingredients.Ingredients_main"
             android:label="Ingredients" />
-        <activity android:name=".RecipieStepsDetails" />
+        <activity android:name=".RecipeStepsDetails" />
         <activity android:name=".steps.StepsMain" />
 
         <provider

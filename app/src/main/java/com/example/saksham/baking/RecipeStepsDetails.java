@@ -1,30 +1,17 @@
 package com.example.saksham.baking;
 
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.app.LoaderManager;
-import android.content.Loader;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.saksham.baking.ingredients.BakingIngredientsAdapter;
-import com.example.saksham.baking.ingredients.BakingIngredientsLoader;
-import com.example.saksham.baking.ingredients.Ingredients;
 import com.example.saksham.baking.steps.Steps;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -44,20 +31,19 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class RecipieStepsDetails extends Fragment implements ExoPlayer.EventListener {
+public class RecipeStepsDetails extends Fragment implements ExoPlayer.EventListener {
 
-    public RecipieStepsDetails()
+    public RecipeStepsDetails()
     {
     }
 
-    private static final String TAG = RecipieStepsDetails.class.getSimpleName();
+    private static final String TAG = RecipeStepsDetails.class.getSimpleName();
 
     @BindView(R.id.extra)
     TextView view1;
@@ -96,13 +82,13 @@ public class RecipieStepsDetails extends Fragment implements ExoPlayer.EventList
             pos=savedInstanceState.getInt("p");
         }
         else {
-            pos = recipie.getPos();
+            pos = Recipe.getPos();
         }
 
         mPlayerView = (SimpleExoPlayerView) rootView.findViewById(R.id.playerView);
         mImage = (ImageView) rootView.findViewById(R.id.playerimage);
 
-        steps = recipie.getList1();
+        steps = Recipe.getList1();
 
 
         stp = steps.get(pos);
@@ -114,7 +100,7 @@ public class RecipieStepsDetails extends Fragment implements ExoPlayer.EventList
 
         initializeMediaSession();
 
-        int flag=recipie.getF();
+        int flag= Recipe.getF();
         if(flag==1) {
                 buttonnext.setVisibility(View.GONE);
                 buttonpre.setVisibility(View.GONE);
