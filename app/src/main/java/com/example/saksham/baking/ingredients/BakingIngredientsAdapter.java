@@ -1,12 +1,16 @@
 package com.example.saksham.baking.ingredients;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.saksham.baking.Data.BakeContract;
 import com.example.saksham.baking.R;
 
 import java.util.List;
@@ -53,7 +57,7 @@ public class BakingIngredientsAdapter extends RecyclerView.Adapter<BakingIngredi
 
         return new BakingIngredientsAdapter.MyViewHolder(itemView);
     }
-
+    private Uri newUri;
     @Override
     public void onBindViewHolder(BakingIngredientsAdapter.MyViewHolder holder, int position) {
         Ingredients bake = bakingList.get(position);
@@ -62,7 +66,10 @@ public class BakingIngredientsAdapter extends RecyclerView.Adapter<BakingIngredi
         holder.measure.setText(bake.getMeasure());
 
 
-    }
+
+
+        }
+
 
     @Override
     public int getItemCount() {

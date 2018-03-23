@@ -11,7 +11,7 @@ import com.example.saksham.baking.R;
 import com.example.saksham.baking.RecipieStepsDetails;
 
 public class Ingeridients_main extends AppCompatActivity {
-    int flag=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

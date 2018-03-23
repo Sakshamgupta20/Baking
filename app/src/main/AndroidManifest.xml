@@ -12,6 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <service android:name=".MyWidgetRemoteViewsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS">
+
+        </service>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +31,23 @@
             android:name=".ingredients.Ingeridients_main"
             android:label="Ingredients" />
         <activity android:name=".RecipieStepsDetails" />
-        <activity android:name=".steps.StepsMain"></activity>
+        <activity android:name=".steps.StepsMain" />
+
+        <provider
+            android:name=".Data.BakeProvider"
+            android:authorities="com.example.saksham.baking"
+            android:exported="false" />
+
+
+        <receiver android:name=".InstructionsWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/instructions_widget_provider_info" />
+        </receiver>
     </application>
 
 </manifest>
