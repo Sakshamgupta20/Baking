@@ -6,6 +6,8 @@ import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.content.ContentResolver;
 import android.support.v4.app.LoaderManager;
@@ -27,11 +29,15 @@ import com.example.saksham.baking.steps.BakingStepsAdapter;
 
 import java.util.List;
 
-public class IngredientsAll extends Fragment {
+public class IngredientsAll extends Fragment{
     int Position;
     private BakingIngredientsAdapter mAdapter;
    private RecyclerView recyclerView;
 public static List<Ingredients> ingre;
+    LinearLayoutManager layoutManager;
+
+    public static int index = -1;
+    public static int top = -1;
    public IngredientsAll()
    {
    }
@@ -44,17 +50,19 @@ public static List<Ingredients> ingre;
         final View rootView = inflater.inflate(R.layout.activity_ingredients_all, container, false);
 
 
-
-
         recyclerView=(RecyclerView)rootView.findViewById(R.id.increrecy);
         //ingredients=(ArrayList<Ingredients>)bundle.getSerializable("ingre");
         Position= MainActivity.getData();
         Position+=1;
 
+        if(savedInstanceState!=null) {
+            index = savedInstanceState.getInt("index");
+            top = savedInstanceState.getInt("top");
+        }
 
-
-            LinearLayoutManager layoutManager
+            layoutManager
                     = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+
 
             recyclerView.setLayoutManager(layoutManager);
 
@@ -95,6 +103,10 @@ return rootView;
                     getActivity().getContentResolver().insert(BakeContract.BakingEntry.CONTENTURI, values);
                 }
                 InstructionsWidgetProvider.sendRefreshBroadcast(getContext());
+                if(index != -1)
+                {
+                    layoutManager.scrollToPositionWithOffset( index, top);
+                }
             }
         }
 
@@ -103,4 +115,21 @@ return rootView;
             mAdapter.clear();
         }
     };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        index =layoutManager.findFirstVisibleItemPosition();
+        View v = recyclerView.getChildAt(0);
+        top = (v == null) ? 0 : (v.getTop() - recyclerView.getPaddingTop());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("index",index);
+        outState.putInt("top",top);
+    }
+
+
 }

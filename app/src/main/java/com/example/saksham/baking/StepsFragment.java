@@ -24,7 +24,10 @@ public class StepsFragment extends Fragment  {
     int Position=0;
     private BakingStepsAdapter mAdapter;
     private RecyclerView recyclerView;
+    LinearLayoutManager layoutManager;
 
+    public static int index = -1;
+    public static int top = -1;
     private static final String REQUEST_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
     public StepsFragment() {
@@ -35,7 +38,7 @@ public class StepsFragment extends Fragment  {
 
         View rootView = inflater.inflate(R.layout.fragment_steps, container, false);
 
-        LinearLayoutManager layoutManager
+         layoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclersteps);
@@ -43,6 +46,10 @@ public class StepsFragment extends Fragment  {
         Position= MainActivity.getData();
         Position+=1;
 
+        if(savedInstanceState!=null) {
+            index = savedInstanceState.getInt("index");
+            top = savedInstanceState.getInt("top");
+        }
         recyclerView.setLayoutManager(layoutManager);
 
 
@@ -72,6 +79,10 @@ public class StepsFragment extends Fragment  {
             if (steps != null && steps.size() > 0) {
                 mAdapter.setBakingData(steps);
             }
+            if(index != -1)
+            {
+                layoutManager.scrollToPositionWithOffset( index, top);
+            }
         }
 
         @Override
@@ -79,4 +90,19 @@ public class StepsFragment extends Fragment  {
 
         }
     };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        index =layoutManager.findFirstVisibleItemPosition();
+        View v = recyclerView.getChildAt(0);
+        top = (v == null) ? 0 : (v.getTop() - recyclerView.getPaddingTop());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("index",index);
+        outState.putInt("top",top);
+    }
 }

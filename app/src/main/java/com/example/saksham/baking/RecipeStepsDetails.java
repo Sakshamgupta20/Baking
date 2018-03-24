@@ -1,5 +1,6 @@
 package com.example.saksham.baking;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.saksham.baking.steps.Steps;
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -30,6 +32,7 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -39,19 +42,22 @@ import butterknife.Unbinder;
 
 public class RecipeStepsDetails extends Fragment implements ExoPlayer.EventListener {
 
-    public RecipeStepsDetails()
-    {
+    public RecipeStepsDetails() {
     }
 
     private static final String TAG = RecipeStepsDetails.class.getSimpleName();
 
+    private static final String POSITIONKEY = "KEY";
+    private static final String POSITIONVIDEO = "KEYV";
     @BindView(R.id.extra)
     TextView view1;
     @BindView(R.id.next)
     Button buttonnext;
     @BindView(R.id.previous)
     Button buttonpre;
-    int pos=9999;
+    int pos = 9999;
+    long playerlong;
+    long playerposition = C.TIME_UNSET;
     String value;
     List<Steps> steps;
     Steps stp;
@@ -61,10 +67,8 @@ public class RecipeStepsDetails extends Fragment implements ExoPlayer.EventListe
     private SimpleExoPlayer mExoPlayer;
     private SimpleExoPlayerView mPlayerView;
     private ImageView mImage;
-
+    private String imaget;
     private Unbinder unbinder;
-
-
 
 
     @Override
@@ -77,11 +81,13 @@ public class RecipeStepsDetails extends Fragment implements ExoPlayer.EventListe
 
         unbinder = ButterKnife.bind(this, rootView);
 
-        if(savedInstanceState!=null)
-        {
-            pos=savedInstanceState.getInt("p");
+        if (savedInstanceState != null) {
+            String posS = savedInstanceState.getString(POSITIONKEY);
+            pos = Integer.parseInt(posS);
+            playerposition = savedInstanceState.getLong(POSITIONVIDEO, C.TIME_UNSET);
         }
-        else {
+        else
+            {
             pos = Recipe.getPos();
         }
 
@@ -97,20 +103,26 @@ public class RecipeStepsDetails extends Fragment implements ExoPlayer.EventListe
         view1.setText(value);
 
         videourl = stp.getVideoURL();
-
+        imaget = stp.getThumbnailURL();
         initializeMediaSession();
 
-        int flag= Recipe.getF();
-        if(flag==1) {
-                buttonnext.setVisibility(View.GONE);
-                buttonpre.setVisibility(View.GONE);
+        int flag = Recipe.getF();
+        if (flag == 1) {
+            buttonnext.setVisibility(View.GONE);
+            buttonpre.setVisibility(View.GONE);
         }
 
         if (videourl.equalsIgnoreCase("")) {
             Uri uri = Uri.parse(videourl);
             initializePlayer(uri);
             mPlayerView.setVisibility(View.INVISIBLE);
-            mImage.setVisibility(View.VISIBLE);
+            if (imaget.equalsIgnoreCase("")) {
+                Picasso.get().load(R.drawable.novideo).into(mImage);
+                mImage.setVisibility(View.VISIBLE);
+            } else {
+                Picasso.get().load(imaget).into(mImage);
+                mImage.setVisibility(View.VISIBLE);
+            }
         } else {
             mPlayerView.setVisibility(View.VISIBLE);
             mImage.setVisibility(View.INVISIBLE);
@@ -122,10 +134,11 @@ public class RecipeStepsDetails extends Fragment implements ExoPlayer.EventListe
             @Override
             public void onClick(View view) {
                 try {
+                     playerposition = C.TIME_UNSET;
                     pos = pos + 1;
                     stp = steps.get(pos);
                     value = stp.getDescription();
-
+                    imaget = stp.getThumbnailURL();
                     videourl = stp.getVideoURL();
                     releasePlayer();
 
@@ -133,7 +146,14 @@ public class RecipeStepsDetails extends Fragment implements ExoPlayer.EventListe
                         Uri uri = Uri.parse(videourl);
                         initializePlayer(uri);
                         mPlayerView.setVisibility(View.INVISIBLE);
-                        mImage.setVisibility(View.VISIBLE);
+
+                        if (imaget.equalsIgnoreCase("")) {
+                            Picasso.get().load(R.drawable.novideo).into(mImage);
+                            mImage.setVisibility(View.VISIBLE);
+                        } else {
+                            Picasso.get().load(imaget).into(mImage);
+                            mImage.setVisibility(View.VISIBLE);
+                        }
                     } else {
                         mPlayerView.setVisibility(View.VISIBLE);
                         mImage.setVisibility(View.INVISIBLE);
@@ -143,7 +163,6 @@ public class RecipeStepsDetails extends Fragment implements ExoPlayer.EventListe
 
                     buttonpre.setEnabled(true);
                     view1.setText(value);
-                    stp = steps.get(pos + 1);
                 } catch (IndexOutOfBoundsException e) {
                     e.printStackTrace();
                     pos = pos - 1;
@@ -155,17 +174,24 @@ public class RecipeStepsDetails extends Fragment implements ExoPlayer.EventListe
             @Override
             public void onClick(View view) {
                 if (pos > 0) {
+                    playerposition = C.TIME_UNSET;
                     pos = pos - 1;
                     stp = steps.get(pos);
                     value = stp.getDescription();
-
+                    imaget = stp.getThumbnailURL();
                     videourl = stp.getVideoURL();
                     releasePlayer();
                     if (videourl.equalsIgnoreCase("")) {
                         Uri uri = Uri.parse(videourl);
                         initializePlayer(uri);
                         mPlayerView.setVisibility(View.INVISIBLE);
-                        mImage.setVisibility(View.VISIBLE);
+                        if (imaget.equalsIgnoreCase("")) {
+                            Picasso.get().load(R.drawable.novideo).into(mImage);
+                            mImage.setVisibility(View.VISIBLE);
+                        } else {
+                            Picasso.get().load(imaget).into(mImage);
+                            mImage.setVisibility(View.VISIBLE);
+                        }
                     } else {
                         mPlayerView.setVisibility(View.VISIBLE);
                         mImage.setVisibility(View.INVISIBLE);
@@ -187,11 +213,10 @@ public class RecipeStepsDetails extends Fragment implements ExoPlayer.EventListe
     }
 
 
-
     private void initializeMediaSession() {
 
         // Create a MediaSessionCompat.
-        mMediaSession = new MediaSessionCompat(getContext(),TAG);
+        mMediaSession = new MediaSessionCompat(getContext(), TAG);
 
         // Enable callbacks from MediaButtons and TransportControls.
         mMediaSession.setFlags(
@@ -234,39 +259,47 @@ public class RecipeStepsDetails extends Fragment implements ExoPlayer.EventListe
             String userAgent = Util.getUserAgent(getContext(), "Baking");
             MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
                     getContext(), userAgent), new DefaultExtractorsFactory(), null, null);
+
+            if (playerposition != C.TIME_UNSET) mExoPlayer.seekTo(playerposition);
             mExoPlayer.prepare(mediaSource);
             mExoPlayer.setPlayWhenReady(true);
         }
     }
 
     private void releasePlayer() {
-        mExoPlayer.stop();
-        mExoPlayer.release();
-        mExoPlayer = null;
+        if(mExoPlayer!=null) {
+            mExoPlayer.stop();
+            mExoPlayer.release();
+            mExoPlayer = null;
+        }
     }
+
+
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
         mMediaSession.setActive(false);
-        releasePlayer();
+            releasePlayer();
         unbinder.unbind();
     }
-
-
 
     @Override
     public void onStop() {
         super.onStop();
-        mExoPlayer.setPlayWhenReady(false);
-        mExoPlayer.getPlaybackState();
+        if (Util.SDK_INT <= 23) {
+            releasePlayer();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mExoPlayer.setPlayWhenReady(false);
-        mExoPlayer.getPlaybackState();
+            playerlong = mExoPlayer.getCurrentPosition();
+        if (Util.SDK_INT <= 23) {
+            releasePlayer();
+        }
+
     }
 
     @Override
@@ -293,10 +326,10 @@ public class RecipeStepsDetails extends Fragment implements ExoPlayer.EventListe
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-        if((playbackState == ExoPlayer.STATE_READY) && playWhenReady){
+        if ((playbackState == ExoPlayer.STATE_READY) && playWhenReady) {
             mStateBuilder.setState(PlaybackStateCompat.STATE_PLAYING,
                     mExoPlayer.getCurrentPosition(), 1f);
-        } else if((playbackState == ExoPlayer.STATE_READY)){
+        } else if ((playbackState == ExoPlayer.STATE_READY)) {
             mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED,
                     mExoPlayer.getCurrentPosition(), 1f);
         }
@@ -331,8 +364,11 @@ public class RecipeStepsDetails extends Fragment implements ExoPlayer.EventListe
         }
     }
 
-    public void onSaveInstanceState(Bundle currentState) {
-        super.onSaveInstanceState(currentState);
-        currentState.putInt("p", pos);
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(POSITIONKEY, String.valueOf(pos));
+        savedInstanceState.putLong(POSITIONVIDEO, playerlong);
     }
+
 }

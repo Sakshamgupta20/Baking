@@ -78,11 +78,11 @@ public class BakingAdapter extends RecyclerView.Adapter<BakingAdapter.MyViewHold
         String a=bake.getImage();
         if(TextUtils.isEmpty(a))
         {
-            Picasso.with(mContext).load(R.drawable.logo).into(holder.image);
+            Picasso.get().load(R.drawable.logo).into(holder.image);
         }
         else
         {
-            Picasso.with(mContext).load(a).into(holder.image);
+            Picasso.get().load(a).into(holder.image);
         }
 
     }

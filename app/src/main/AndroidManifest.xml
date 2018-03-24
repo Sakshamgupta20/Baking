@@ -25,14 +25,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Recipe" />
-        <activity android:name=".ingredients.IngredientsAll" />
+        <activity android:name=".Recipe">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.saksham.baking.MainActivity" />
+    </activity>
+        <activity android:name=".ingredients.IngredientsAll">
+        </activity>
         <activity
             android:name=".ingredients.Ingredients_main"
-            android:label="Ingredients" />
+            android:label="Ingredients">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.saksham.baking.Recipe" />
+        </activity>
         <activity android:name=".RecipeStepsDetails" />
-        <activity android:name=".steps.StepsMain" />
-
+        <activity android:name=".steps.StepsMain" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.saksham.baking.Recipe" />
+        </activity>
         <provider
             android:name=".Data.BakeProvider"
             android:authorities="com.example.saksham.baking"

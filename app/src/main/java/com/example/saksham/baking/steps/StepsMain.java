@@ -15,11 +15,14 @@ public class StepsMain extends AppCompatActivity {
         setContentView(R.layout.activity_ingeridients_main);
 
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        if(savedInstanceState==null) {
 
-        RecipeStepsDetails StFragment = new RecipeStepsDetails();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+
+            RecipeStepsDetails StFragment = new RecipeStepsDetails();
             fragmentManager.beginTransaction()
                     .replace(R.id.ingredient_all, StFragment)
-                   .commit();
+                    .commit();
+        }
     }
 }
