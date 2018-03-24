@@ -30,8 +30,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.saksham.baking.MainActivity" />
     </activity>
-        <activity android:name=".ingredients.IngredientsAll">
-        </activity>
+
         <activity
             android:name=".ingredients.Ingredients_main"
             android:label="Ingredients">
@@ -39,7 +38,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.saksham.baking.Recipe" />
         </activity>
-        <activity android:name=".RecipeStepsDetails" />
         <activity android:name=".steps.StepsMain" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

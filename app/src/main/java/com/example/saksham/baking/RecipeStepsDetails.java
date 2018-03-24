@@ -287,18 +287,14 @@ public class RecipeStepsDetails extends Fragment implements ExoPlayer.EventListe
     @Override
     public void onStop() {
         super.onStop();
-        if (Util.SDK_INT <= 23) {
             releasePlayer();
-        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
             playerlong = mExoPlayer.getCurrentPosition();
-        if (Util.SDK_INT <= 23) {
             releasePlayer();
-        }
 
     }
 
